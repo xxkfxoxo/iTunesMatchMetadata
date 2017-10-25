@@ -4,6 +4,8 @@
 
 A small ruby script to update song metadata with itunes store data. This only works for matched tracks (Kind: Matched AAC audio file). 
 
+If there are files selected in iTunes iTunesMatchMetadata.rb will only update those. Otherwise it will run on all tracks in the library.
+
 ## Prerequisites
 
 * OS X >= 10.11
