@@ -6,14 +6,16 @@
 # Will run against selected tracks or if nothing selected entire library
 # install the required gems with the following commands
 # sudo gem install json
-# sudo gem install rb-appscript
-# then run the script with "ruby meta.rb"
+# sudo gem install rb-scpt
+# then run the script with "ruby iTunesMatchMetadata.rb"
+
 require 'rubygems'
 require 'rb-scpt' 
 require 'json'
 require 'open-uri'
 require 'optparse'
 require_relative "tunes.rb"
+
 
 class Track
   attr_reader :iTunes_id
@@ -96,7 +98,7 @@ class Updater
     STDOUT.sync = true
     tracks = []
 
-    app = Appscript.app.by_name("iTunes", Tunes)
+    app = Appscript.app.by_name("iTunes", Tunes) 
 
     iTunes_tracks = app.selection.get
     if iTunes_tracks.count == 0
@@ -130,7 +132,7 @@ class Updater
       tracks.dup.each.each_slice(WORK_SIZE) do | subtracks |
         ids = subtracks.map { | track | track.iTunes_id }
         iTunesUrl = "http://itunes.apple.com/lookup?id=#{ids.join(',')}&country=#{country}"
-        puts iTunesUrl
+        # puts "QUERY: #{iTunesUrl}"
         iTunesHash = JSON.parse(open(iTunesUrl).read)
         print '*'
         iTunesHash['results'].each do | result |
